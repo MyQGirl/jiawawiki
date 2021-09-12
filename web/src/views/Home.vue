@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+<!--    把代码加入到这里-->
+    <a-button type="danger">Danger</a-button>
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
