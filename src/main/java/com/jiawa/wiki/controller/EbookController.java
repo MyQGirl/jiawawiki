@@ -1,6 +1,8 @@
 package com.jiawa.wiki.controller;
 
+import com.jiawa.wiki.domain.Ebook;
 import com.jiawa.wiki.req.EbookQueryReq;
+import com.jiawa.wiki.req.EbookReq;
 import com.jiawa.wiki.req.EbookSaveReq;
 import com.jiawa.wiki.resp.CommonResp;
 import com.jiawa.wiki.resp.EbookQueryResp;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ebook")
@@ -19,9 +22,9 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public CommonResp list(@Valid EbookQueryReq req) {
-        CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
-        PageResp<EbookQueryResp> list = ebookService.list(req);
+    public CommonResp list(EbookReq req) {
+        CommonResp<Object> resp = new CommonResp<>();
+        List<Ebook> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
