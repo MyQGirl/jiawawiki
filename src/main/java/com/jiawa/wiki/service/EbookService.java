@@ -31,14 +31,13 @@ public class EbookService {
     @Resource
     private SnowFlake snowFlake;
 
-        @Resource
 
-        public List<Ebook> list(EbookReq req) {
-            EbookExample ebookExample = new EbookExample();
-            EbookExample.Criteria criteria = ebookExample.createCriteria();
-            criteria.andNameLike("%"+req.getName()+"%");
-            return ebookMapper.selectByExample(ebookExample);
-        }
+    public List<Ebook> list(EbookReq req) {
+        EbookExample ebookExample = new EbookExample();
+        EbookExample.Criteria criteria = ebookExample.createCriteria();
+        criteria.andNameLike("%"+req.getName()+"%");
+        return ebookMapper.selectByExample(ebookExample);
+    }
 
     /**
      * 保存

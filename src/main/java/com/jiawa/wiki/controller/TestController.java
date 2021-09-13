@@ -23,7 +23,7 @@ public class TestController {
     @Resource
     private TestService testService;
 
-    @Resource
+
 //    private RedisTemplate redisTemplate;
 
     /**

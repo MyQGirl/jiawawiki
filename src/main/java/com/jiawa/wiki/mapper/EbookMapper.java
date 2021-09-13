@@ -3,7 +3,11 @@ package com.jiawa.wiki.mapper;
 import com.jiawa.wiki.domain.Ebook;
 import com.jiawa.wiki.domain.EbookExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 
 public interface EbookMapper {
     long countByExample(EbookExample example);
