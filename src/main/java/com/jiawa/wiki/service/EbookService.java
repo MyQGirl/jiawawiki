@@ -35,7 +35,10 @@ public class EbookService {
     public List<Ebook> list(EbookReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        criteria.andNameLike("%"+req.getName()+"%");
+       if(!(ObjectUtils.isEmpty(req.getName()))){
+            criteria.andNameLike("%"+req.getName()+"%");
+        }
+
         return ebookMapper.selectByExample(ebookExample);
     }
 
