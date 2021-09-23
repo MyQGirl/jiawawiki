@@ -5,7 +5,7 @@ package com.jiawa.wiki.req;
  * @author Liu Guopeng
  * @date 2021/6/10 下午5:51
  */
-public class EbookReq {
+public class EbookReq  extends PageReq {
 
     private Long id;
 
