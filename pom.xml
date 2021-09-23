@@ -76,11 +76,11 @@
         </dependency>
 
         <!-- pagehelper 插件-->
-       <!-- <dependency>
+        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.13</version>
-        </dependency>-->
+        </dependency>
 
         <!-- RocketMQ-->
         <!--<dependency>-->

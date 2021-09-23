@@ -2,6 +2,8 @@ package com.jiawa.wiki.service;
 
 //import com.github.pagehelper.PageHelper;
 //import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiawa.wiki.domain.Ebook;
 import com.jiawa.wiki.domain.EbookExample;
 import com.jiawa.wiki.mapper.EbookMapper;
@@ -33,13 +35,20 @@ public class EbookService {
 
 
     public List<Ebook> list(EbookReq req) {
+
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
        if(!(ObjectUtils.isEmpty(req.getName()))){
             criteria.andNameLike("%"+req.getName()+"%");
         }
 
-        return ebookMapper.selectByExample(ebookExample);
+        PageHelper.startPage(1,3);
+       List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
+
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
+        LOG.info("总行数：{}", pageInfo.getTotal());
+        LOG.info("总页数：{}", pageInfo.getPages());
+        return ebookList;
     }
 
     /**
