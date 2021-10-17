@@ -3,6 +3,8 @@ package com.jiawa.wiki.util;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Twitter的分布式自增ID雪花算法
@@ -13,13 +15,13 @@ public class SnowFlake {
     /**
      * 起始的时间戳
      */
-    private final static long START_STMP = 1609459200000L; // 2021-01-01 00:00:00
+    private final static long START_STMP = 1609459200000L; // 2021-01-01 08:00:00   起始时间
 
     /**
      * 每一部分占用的位数
      */
     private final static long SEQUENCE_BIT = 12; //序列号占用的位数
-    private final static long MACHINE_BIT = 5;   //机器标识占用的位数
+    private final static long MACHINE_BIT = 5;   //机器标识占用的位数 2^5=32  最多可以表示32台机器
     private final static long DATACENTER_BIT = 5;//数据中心占用的位数
 
     /**
@@ -61,14 +63,14 @@ public class SnowFlake {
      * @return
      */
     public synchronized long nextId() {
-        long currStmp = getNewstmp();
+        long currStmp = getNewstmp();//这个是跟起始时间戳的一个差值
         if (currStmp < lastStmp) {
             throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
         }
 
         if (currStmp == lastStmp) {
             //相同毫秒内，序列号自增
-            sequence = (sequence + 1) & MAX_SEQUENCE;
+            sequence = (sequence + 1) & MAX_SEQUENCE;  //一个毫秒内，最多可以生成的序列号是 2^SEQUENCE_BIT
             //同一毫秒的序列数已经达到最大
             if (sequence == 0L) {
                 currStmp = getNextMill();
@@ -100,19 +102,19 @@ public class SnowFlake {
 
     public static void main(String[] args) throws ParseException {
         // 时间戳
-        // System.out.println(System.currentTimeMillis());
-        // System.out.println(new Date().getTime());
-        //
-        // String dateTime = "2021-01-01 08:00:00";
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        // System.out.println(sdf.parse(dateTime).getTime());
+//         System.out.println(System.currentTimeMillis());
+//         System.out.println(new Date().getTime());
+//
+//         String dateTime = "2021-01-01 08:00:00";
+//         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//         System.out.println(sdf.parse(dateTime).getTime());
 
         SnowFlake snowFlake = new SnowFlake(1, 1);
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10; i++) {
-            System.out.println(snowFlake.nextId());
-            System.out.println(System.currentTimeMillis() - start);
+            System.out.println(snowFlake.nextId());//每次都去生成id
+            System.out.println(System.currentTimeMillis() - start);//计算生成所耗费的时间
         }
     }
 }
