@@ -1,28 +1,28 @@
 <template>
     <a-layout>
 
+        <a-layout-sider width="200" style="background: #fff">
+            <a-menu
+                    mode="inline"
+                    :style="{ height: '100%', borderRight: 0 }"
+                    @click="handleClick"
+            >
+                <a-menu-item key="welcome">
+                    <MailOutlined />
+                    <span>欢迎</span>
+                </a-menu-item>
 
-            <a-layout-sider width="200" style="background: #fff">
-                <a-menu
-                        mode="inline"
-                        :style="{ height: '100%', borderRight: 0 }"
-                        @click="handleClick"
-                >
-                    <a-menu-item key="welcome">
-                            <MailOutlined />
-                            <span>欢迎</span>
+                <a-sub-menu v-for="item in level1" :key="item.id" >
+                    <template v-slot:title>
+                        <span><user-outlined />{{item.name}}</span>
+                    </template>
+                    <a-menu-item v-for="child in item.children" :key="child.id">
+                        <MailOutlined /><span>{{child.name}}</span>
                     </a-menu-item>
+                </a-sub-menu>
+            </a-menu>
+        </a-layout-sider>
 
-                    <a-sub-menu v-for="item in level1" :key="item.id" >
-                        <template v-slot:title>
-                            <span><user-outlined />{{item.name}}</span>
-                        </template>
-                        <a-menu-item v-for="child in item.children" :key="child.id">
-                            <MailOutlined /><span>{{child.name}}</span>
-                        </a-menu-item>
-                    </a-sub-menu>
-                </a-menu>
-            </a-layout-sider>
 
             <a-layout-content
                     :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
@@ -115,26 +115,14 @@ export default defineComponent({
                 }
             });
         };
-
+        let categoryId2 = 0;
         const isShowWelcome = ref(true);
-
-        const handleClick = (value: any) => {
-            console.log("menu click",value)
-            isShowWelcome.value = value.key === 'welcome';
-            // if (value.key === 'welcome'){
-            //     isShowWelcome.value = true;
-            // } else {
-            //     isShowWelcome.value = false;
-            // }
-        };
-
-
-        onMounted(()=>{
-            handleQueryCategory();
+        const handleQueryEbook= () => {
             axios.get("/ebook/list", {
                 params: {
                     page: 1,
-                    size: 1000
+                    size: 1000,
+                    categoryId2: categoryId2
                 }
             }).then((response) => {
                 // 把响应里的data拿出来
@@ -143,6 +131,26 @@ export default defineComponent({
                 // ebooks1.books = data.content;
 
             });
+        };
+
+        const handleClick = (value: any) => {
+            console.log("menu click",value)
+            // isShowWelcome.value = value.key === 'welcome';
+            if (value.key === 'welcome'){
+                isShowWelcome.value = true;
+            } else {
+                categoryId2 = value.key;
+                isShowWelcome.value = false;
+                handleQueryEbook();
+
+            }
+        };
+
+
+
+        onMounted(()=>{
+            handleQueryCategory();
+
 
         });
 

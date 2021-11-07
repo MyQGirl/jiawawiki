@@ -10,7 +10,15 @@ public class EbookQueryReq extends PageReq {
     private Long id;
 
     private String name;
+    private Long categoryId2;
 
+    public Long getCategoryId2() {
+        return categoryId2;
+    }
+
+    public void setCategoryId2(Long categoryId2) {
+        this.categoryId2 = categoryId2;
+    }
 
     public Long getId() {
         return id;
@@ -28,17 +36,12 @@ public class EbookQueryReq extends PageReq {
         this.name = name;
     }
 
-
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append("]");
-        return sb.toString();
+        return "EbookQueryReq{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", categoryId2='" + categoryId2 + '\'' +
+                "} " + super.toString();
     }
 }
